@@ -11,5 +11,5 @@ The intent of this search algorithm is to experiment with
 alternate implementations for unorginzed lists.
 
 Algorithmic analysis pending to comfirm actual running time.
-Aimiing for O(nlogn).
+Aiming for O(nlogn).
 

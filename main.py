@@ -31,14 +31,14 @@ p = size - k
 o = p
 
 # Get user input
-searchVal  = input("Enter value to search ")
+searchVal  = input("Enter value to search: ")
 
 for s in range(size // 4 + 1):
     if (rand_arr[int(i % size)] == searchVal or rand_arr[int(j % size)] == searchVal or
             rand_arr[int(k % size)] == searchVal or rand_arr[int(m % size)] == searchVal or
             rand_arr[int(n % size)] == searchVal or rand_arr[int(l % size)] == searchVal or
             rand_arr[int(o % size)] == searchVal or rand_arr[int(p % size)] == searchVal):
-        print("Found in position", rand_arr[pos])
+                print("Found in position", rand_arr.index(searchVal))
     i -= 1
     j += 1
     k -= 1

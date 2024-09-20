@@ -11,6 +11,8 @@ for i in range(0, 100):
 
 '''
 
+#Better create classes and functions.
+
 # Fill 1D array with random ints between 0 and 100 for now
 size = 100
 

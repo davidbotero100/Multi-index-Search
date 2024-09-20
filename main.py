@@ -1,5 +1,8 @@
 # Multi-index-Search algorithm version 0.1
+
 import numpy as np
+from random import sample, shuffle, randint
+from pytictoc import TicToc
 
 # Declare Array of data
 '''
@@ -12,6 +15,58 @@ for i in range(0, 100):
 '''
 
 #Better create classes and functions.
+
+class multiIndex():
+        
+        data = []
+       
+        def getUserInput(self) -> int:
+               
+               self.numbers = input('Enter the number of elements: ')
+
+               #print(self.numbers)
+
+               return self.numbers
+               
+
+        def fillList(self, numbers: int) -> None:
+                
+                local_list = []
+
+                #converted_int = int(numbers)
+
+                for i in range(numbers):
+                        local_list.append(i)
+                        
+                self.data = shuffle(local_list)
+                
+                
+
+                
+
+
+                
+               
+    
+if __name__ == '__main__':
+        
+        t = TicToc()
+        t.tic()
+
+        mi = multiIndex()
+
+        numbers = mi.getUserInput()
+        #print(numbers)
+        converted_int = int(numbers)
+        mi.fillList(converted_int)
+        #print(*mi.data)
+
+        t.toc()
+
+        pass
+
+
+           
 
 # Fill 1D array with random ints between 0 and 100 for now
 size = 100

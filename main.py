@@ -16,33 +16,65 @@ for i in range(0, 100):
 
 #Better create classes and functions.
 
-class multiIndex():
-        
-        data = []
+class multiIndex(): 
+
+    # List of integers
+    data = []
+
+    #Dictionary of indecies
+    indecies = dict(i=0, j=0)
+
+    """
+    i = size -1
+    j =0
+
+    k = size//4
+    m = k
+
+    l = size//2
+    n = k
+
+    p = size - k
+    o = p
+    """
+
        
-        def getUserInput(self) -> int:
+    def getUserInput(self) -> int:
+
+        self.numbers = input('Enter the number of elements: ')
+
+        #print(self.numbers)
+
+        return self.numbers
                
-               self.numbers = input('Enter the number of elements: ')
 
-               #print(self.numbers)
+    def fillList(self, numbers: int) -> None:
 
-               return self.numbers
-               
+        local_list = []
 
-        def fillList(self, numbers: int) -> None:
+        #converted_int = int(numbers)
+
+        for i in range(numbers):
+            local_list.append(i)
                 
-                local_list = []
+        #self.data = shuffle(local_list)
 
-                #converted_int = int(numbers)
+        self.data.extend(local_list)
+        #print(*self.data)
 
-                for i in range(numbers):
-                        local_list.append(i)
-                        
-                self.data = shuffle(local_list)
-                
-                
+        #print(*self.data)
 
-                
+    def shuffle(self, times: int = 100 ) -> None:
+         
+        for i in range(times):
+            shuffle(self.data)
+
+    def testIndecies(self) -> None:
+        
+        for i in range(5):
+            self.indecies['i'] += 2
+            self.indecies['j'] += 1
+        print(f"After iteration {i + 1}: {self.indecies}")
 
 
                 
@@ -50,20 +82,21 @@ class multiIndex():
     
 if __name__ == '__main__':
         
-        t = TicToc()
-        t.tic()
+    t = TicToc()
+    t.tic()
 
-        mi = multiIndex()
+    mi = multiIndex()
 
-        numbers = mi.getUserInput()
-        #print(numbers)
-        converted_int = int(numbers)
-        mi.fillList(converted_int)
-        #print(*mi.data)
+    numbers = mi.getUserInput()
+    
+    converted_int = int(numbers)
+    mi.fillList(converted_int)
+    mi.testIndecies()
+    
 
-        t.toc()
+    t.toc()
 
-        pass
+    pass
 
 
            

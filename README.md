@@ -8,7 +8,7 @@ data structure. That is, define what factors drive the scalabilty of indexes
 to maintian optimal run time speed.
 
 The intent of this search algorithm is to experiment with 
-alternate implementations for unorginzed lists.
+alternate implementations of search algorithms for unorginzed lists of names or numbers.
 
 Algorithmic analysis pending to comfirm actual running time.
 Aiming for O(nlogn).

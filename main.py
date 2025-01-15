@@ -1,29 +1,26 @@
-# Multi-Index-Search Algorithm Version 0.1
+# Multi-Index-Search Algorithm Version 0.5
 
 import numpy as np
-from random import sample, shuffle, randint
-from pytictoc import TicToc
-
+from random import shuffle
 
 class multiIndex(): 
-
+    
     # Variable Declarations-------------------------------------
 
     # List of integers selected by user
     data = []
-
-    #Dictionary of indicies
-    indicies = dict( i=0, j=0, k=0, l=0,
-                    m=0, n=0, o=0, p=0, )
+                    
     #-----------------------------------------------------------
+    
      
     def getUserList(self) -> int:
 
-        self.numbers = input('Enter the number of elements: ')
+        self.numbers = input('Enter the number of elements, greater than 8: ')
 
-        #print(self.numbers)
+        while not self.numbers.isdigit() or int(self.numbers) < 8:
+            print('Invalid input. Please enter a number greater than 8.')
+            self.numbers = input('Enter the number of elements: ')
 
-        # Convert str user input to int
         self.converted_numbers = int(self.numbers)
 
         return self.converted_numbers
@@ -40,38 +37,30 @@ class multiIndex():
 
 
     def shuffle(self, times: int = 100 ) -> None:
-         
+
         for i in range(times):
             shuffle(self.data)
-            
-
-    # For testing index updates
-    def testindicies(self) -> None:
-        
-        for i in range(5):
-            self.indicies['i'] += 2
-            self.indicies['j'] += 1
-        print(f"After iteration {i + 1}: {self.indicies}")
 
 
-    def setIndicies(self, numbers: int) -> None:
 
-        list_size = numbers
+    def setIndexes(self, numbers: int) -> None:
 
-        third_quarter = (list_size * 3) // 4
+        if numbers < 8:
+            print('List must have at least 8 elements.')
+            exit()
 
-        self.indicies['i'] = 0
+        # Number of dynamic segments (pairs of indexes)
+        num_segments = max(4, int(np.log2(numbers)))
+        segment_size = numbers // num_segments
 
-        self.indicies['j'] = list_size//4
-        self.indicies['k'] = list_size//4+1
+        # Dynamic start and end indexes for each segment
+        self.indexes = {}
+        for i in range(num_segments):
+            start_key = f'start_{i}'
+            end_key = f'end_{i}'
+            self.indexes[start_key] = i * segment_size
+            self.indexes[end_key] = min((i + 1) * segment_size - 1, numbers - 1)
 
-        self.indicies['l'] = list_size//2
-        self.indicies['m'] = list_size//2+1
-
-        self.indicies['n'] = third_quarter
-        self.indicies['o'] = third_quarter+1
-
-        self.indicies['p'] = list_size-1
 
 
     def getUserValue(self) -> int:
@@ -81,6 +70,10 @@ class multiIndex():
          while i < 1:
             
             userStr = input('Enter value to search: ')
+            
+            while not userStr.isdigit():
+                print('Invalid input. Please enter a number.')
+                userStr = input('Enter value to search: ')
 
             userVal = int(userStr)
 
@@ -94,42 +87,24 @@ class multiIndex():
          return userVal
 
 
-
-    
     def findValue(self, searchVal: int, numbers: int) -> None:
-         
-         list_size = len(self.data)
-         quarter = list_size // 4
-         half = list_size // 2
-         third_quarter = (list_size * 3) // 4
 
-         
-         
-         for x in range(numbers):
-              
-              if (searchVal == self.data[self.indicies['i']] or searchVal == self.data[self.indicies['j']] or
-                  searchVal == self.data[self.indicies['k']] or searchVal == self.data[self.indicies['l']] or
-                  searchVal == self.data[self.indicies['m']] or searchVal == self.data[self.indicies['n']] or
-                  searchVal == self.data[self.indicies['o']] or searchVal == self.data[self.indicies['p']]):
+        for iteration in range(numbers):
 
-                  print('Item found it in iteration ', x)
-                  break
-              
-              else:
-                  # Update indices within their quarters
-            
-                  self.indicies['i'] = min(self.indicies['i'] + 1, (list_size//8))
+            # Value found
+            if any(searchVal == self.data[idx] for idx in self.indexes.values()):
+                print(f'Item found in iteration {iteration}')
+                break
 
-                  self.indicies['j'] = max(self.indicies['j'] - 1, (list_size//8))
-                  self.indicies['k'] = min(self.indicies['k'] + 1, quarter)
+            # Close in the indexes on their respective segments
+            num_segments = len(self.indexes) // 2
+            for i in range(num_segments):
+                start_key = f'start_{i}'
+                end_key = f'end_{i}'
 
-                  self.indicies['l'] = max(self.indicies['l'] - 1, quarter)
-                  self.indicies['m'] = min(self.indicies['m'] + 1, half)
+                self.indexes[start_key] = min(self.indexes[start_key] + 1, self.indexes[end_key])
+                self.indexes[end_key] = max(self.indexes[end_key] - 1, self.indexes[start_key])
 
-                  self.indicies['n'] = max(self.indicies['n'] - 1, third_quarter)
-                  self.indicies['o'] = min(self.indicies['o'] + 1, third_quarter)
-
-                  self.indicies['p'] = max(self.indicies['p'] - 1, third_quarter)
     
 if __name__ == '__main__':
 
@@ -137,16 +112,14 @@ if __name__ == '__main__':
 
     numbers = mi.getUserList()
     
-    #converted_numbers = int(numbers)
     mi.fillList(numbers)
+
     mi.shuffle()
+
     #print('Shuffled list is:', *mi.data)
 
-    # For testing only
-    # mi.testindicies()
+    mi.setIndexes(numbers)
 
-    mi.setIndicies(numbers)
     searchValue = mi.getUserValue()
-    #mi.testindicies()
 
     mi.findValue(searchValue, numbers)

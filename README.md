@@ -21,18 +21,18 @@ Further improvements to follow:
 For a list of say 100 elements, the initial indexes are set as follows.
 
 Initial indexes:
-Segment 0: start_0 = 0, end_0 = 13
-Segment 1: start_1 = 14, end_1 = 27
+- Segment 0: start_0 = 0, end_0 = 13
+- Segment 1: start_1 = 14, end_1 = 27
 ...
-Segment 6: start_6 = 84, end_6 = 99
+- Segment 6: start_6 = 84, end_6 = 99
 
 Then, for each iteration during the search, the start and end indexes 
 of each segment close inwards on their respective segment as follows.
 
-Segment 0: start_0 = 1, end_0 = 12
-Segment 1: start_1 = 15, end_1 = 26
+- Segment 0: start_0 = 1, end_0 = 12
+- Segment 1: start_1 = 15, end_1 = 26
 ...
-Segment 6: start_6 = 85, end_6 = 98
+- Segment 6: start_6 = 85, end_6 = 98
 
 This process continues until the target is found or all segments close if the target is not found.
 
@@ -43,4 +43,4 @@ Since the list is divided into log(n) segments, the size of the largest segment 
 and if the element is not found, the algorithm overlaps each segment thereby doubling it, so we get 2log(n).
 
 Therefore, this algorithm stands in O(n/2log(n)) thus far. Further improvements to be made. 
-Aiming for O(nlog(n)) or O(log(n))
+Aiming for O(log(n))
